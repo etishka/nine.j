@@ -1,0 +1,45 @@
+<project name="Nine" default="dist" basedir=".">
+
+    <description>
+        build file for nine.j project
+    </description>
+
+    <!-- set global properties for this build -->
+    <property name="src" location="."/>
+    <property name="build" location="build"/>
+    <property name="dist"  location="dist"/>
+    <property name="debug"  value="on"/>
+
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init"
+            description="compile the source " >
+        <!-- Compile the java code from ${src} into ${build} -->
+        <javac srcdir="${src}" destdir="${build}" debug="on"/>
+    </target>
+
+    <target name="dist" depends="compile"
+            description="generate the distribution" >
+        <!-- Create the distribution directory  -->
+        <mkdir dir="${dist}"/>
+
+        <!-- Put everything in ${build} into the nine_j-${DSTAMP}.jar file -->
+        <jar jarfile="${dist}/nine_j-${DSTAMP}.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="org.gang.game.nine.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean"
+            description="clean up" >
+        <!-- Delete the ${build} and ${dist} directory trees -->
+        <delete dir="${build}"/>
+        <delete dir="${dist}"/>
+    </target>
+</project>
